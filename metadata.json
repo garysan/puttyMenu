@@ -1,8 +1,14 @@
 {
-    "shell-version": ["3.12.2"], 
+    "shell-version": [
+	"3.4",
+	"3.6",
+	"3.8",
+	"3.12"
+	], 
     "uuid": "puttyMenu", 
     "name": "puttyMenu", 
     "original-author": "Gary Ariel Sandi Vigabriel",
-    "url": "http://garysandi.blogspot.org", 
-    "description": "puttyMenu"
+    "url": "http://garysandi.blogspot.com", 
+    "description": "puttyMenu",
+    "version": 3
 }

@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Drive menu extension
 const Clutter = imports.gi.Clutter;
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
@@ -40,15 +39,11 @@ const PuttyMenu = new Lang.Class({
 
     _init: function() {
         this.parent(0.0, _("putty"));
-
+	
         let hbox = new St.BoxLayout({ style_class: 'panel-status-menu-box' });
-        let icon = new St.Icon({ icon_name: 'putty',
-                                 style_class: 'system-status-icon' });
+	let icon = new St.Icon({ style_class:'putty_icon'});
+  				 hbox.add_child(icon);
         
-        hbox.add_child(icon);
-        hbox.add_child(new St.Label({ text: '\u25BE',
-                                      y_expand: true,
-                                      y_align: Clutter.ActorAlign.CENTER }));
         this.actor.add_child(hbox);
 	     
         let userdir=String(GLib.get_home_dir());
@@ -89,8 +84,15 @@ function init() {
 let _indicator;
 
 function enable() {
-    _indicator = new PuttyMenu;
-    Main.panel.addToStatusArea('putty-menu', _indicator);
+	//check if putty as installed
+	try {
+		Util.trySpawn(['putty','--help']);
+	} catch (err) {
+		Main.notifyError("Error : " + err.message);
+		throw err;
+	}
+    	_indicator = new PuttyMenu;
+	Main.panel.addToStatusArea('putty-menu', _indicator);
 }
 
 function disable() {
