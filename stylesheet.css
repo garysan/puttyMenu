@@ -1,5 +1,5 @@
 .putty_icon {
-    background-image: url("/usr/share/pixmaps/putty.png");
+    background-image: url('putty.png');
     background-size: 20px;
     height: 20px;
     width: 20px;

@@ -39,45 +39,45 @@ const PuttyMenu = new Lang.Class({
 
     _init: function() {
         this.parent(0.0, _("putty"));
-	
+
         let hbox = new St.BoxLayout({ style_class: 'panel-status-menu-box' });
 	let icon = new St.Icon({ style_class:'putty_icon'});
   				 hbox.add_child(icon);
-        
+
         this.actor.add_child(hbox);
-	     
+
         let userdir=String(GLib.get_home_dir());
         let puttycm='.putty/sessions/';
-        let command='ls -1 '+userdir+'/'+puttycm; 
-        
+        let command='ls -1 '+userdir+'/'+puttycm;
+
         try {
         	let vs = String(GLib.spawn_command_line_sync(command)[1]);
         	let res = vs.split("\n");
-        	
+
         	for (i=0;i<res.length-1;i++)
         	{
-        		let id = res[i];
-        		
-        		this.menu.addAction (id,function(event) {
-        		Util.spawn([ 'putty', '-load', id ]);
+        		let id = decodeURIComponent(res[i]);
+
+        		this.menu.addAction(id, function(event) {
+        		Util.spawn([ 'putty', '-load', id]);
 			});
         	}
 	}
-	catch (err) {	
-		Main.notifyError("Error en la lectura de archivos");		
+	catch (err) {
+		Main.notifyError("Error reading files");
 	}
 
 	this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-	this.menu.addAction(_("Abrir Putty"), function(event) {
+	this.menu.addAction(_("Open Putty"), function(event) {
 	    Util.spawn([ 'putty' ]);
 	});
-	
-	
-    },     
+
+
+    },
 });
 
 function init() {
-	
+
 }
 
 
